@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Todo",
+            name="Profile",
             fields=[
                 (
                     "id",
@@ -26,23 +26,20 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("title", models.CharField(max_length=255)),
-                ("description", models.TextField(blank=True, null=True)),
-                ("completed", models.BooleanField(default=False)),
-                ("created_at", models.DateTimeField(auto_now_add=True)),
-                ("modified_at", models.DateTimeField(auto_now=True)),
+                (
+                    "image",
+                    models.ImageField(
+                        default="profile_pics/default-user.png",
+                        upload_to="profile_pics/",
+                    ),
+                ),
                 (
                     "user",
-                    models.ForeignKey(
-                        blank=True,
-                        null=True,
+                    models.OneToOneField(
                         on_delete=django.db.models.deletion.CASCADE,
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={
-                "ordering": ["completed"],
-            },
         ),
     ]

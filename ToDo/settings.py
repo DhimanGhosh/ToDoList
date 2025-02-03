@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "todo",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,8 @@ WSGI_APPLICATION = "ToDo.wsgi.application"
 
 LOGIN_REDIRECT_URL = "todos"  # Redirect to todos page after login
 LOGOUT_REDIRECT_URL = "login"   # Redirect to login page after logout
+
+HANDLER404 = 'todo.views.custom_404'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -119,9 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     BASE_DIR / "todo" / "static",
+    BASE_DIR / "users" / "static",
 ]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

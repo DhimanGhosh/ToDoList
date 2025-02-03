@@ -27,9 +27,11 @@
         {% endfor %}
     </div>
 
-    <form action="{% url 'add' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary m-2">Add Task</button>
-    </form>
+    {% if todos %}
+        <form action="{% url 'add' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary m-2">Add Task</button>
+        </form>
+    {% endif %}
 
 {% endblock content %}

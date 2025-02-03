@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Todo, Profile
+from .models import Todo
 from django import forms
 import re
 
@@ -59,9 +59,3 @@ class TodoForm(ModelForm):
         if not valid:
             print(f"Form is invalid: Errors: {self.errors}")
         return valid
-
-
-class ProfileUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ["image"]
