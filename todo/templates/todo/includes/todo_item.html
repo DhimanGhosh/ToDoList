@@ -1,0 +1,25 @@
+<div id="todo-{{ todo.id }}" class="alert alert-{% if todo.completed %}success{% else %}warning{% endif %} d-flex justify-content-between align-items-start" role="alert">
+    <!-- Left side: Checkbox + Title & Description -->
+    <div class="d-flex flex-column">
+        <h3 class="mb-2">
+            <input type="checkbox" class="todo-checkbox me-2" data-todo-id="{{ todo.id }}" {% if todo.completed %}checked{% endif %}>
+            {{ todo.title }}
+        </h3>
+        <div class="text-muted">{{ todo.description }}</div>  <!-- Description below the title -->
+    </div>
+
+    <!-- Right side: Created_at + Buttons -->
+    <div class="d-flex flex-column align-items-end">
+        <div class="text-muted mb-2"><b>Created On:</b> {{ todo.created_at|date:"F d, Y h:i A" }}</div>
+        <div class="text-muted mb-2"><b>Last Updated:</b> {{ todo.modified_at|date:"F d, Y h:i A" }}</div>
+
+        <!-- Buttons -->
+        <div class="d-flex">
+            <a href="{% url 'update' todo.id %}" class="btn btn-primary me-2">Update</a>
+            <form action="{% url 'delete' todo.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>

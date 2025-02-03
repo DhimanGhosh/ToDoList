@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Task Add
+{% endblock title %}
+
+{% block content %}
+    <form action="" method="POST" id="todo-form" novalidate>
+        {% csrf_token %}
+
+        <!-- Title Field -->
+        <div class="mb-3">
+            <label for="{{ form.title.id_for_label }}" class="form-label">Task Title:</label>
+            <input type="text" name="{{ form.title.name }}" id="{{ form.title.id_for_label }}"
+                class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+                placeholder="Add the title of the task" maxlength="50" value="{{ form.title.value|default_if_none:'' }}" required>
+            <div class="invalid-feedback" style="display: none;">
+                {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Task Description:</label>
+            <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}"
+                    class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                    placeholder="Add the description of the task" maxlength="500" rows="5" style="resize: none;">{{ form.description.value|default_if_none:'' }}</textarea>
+            <div class="invalid-feedback" style="display: none;">
+                {% for error in form.description.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary m-2">ADD</button>
+    </form>
+
+    <script src="{% static 'todo/js/form-validation.js' %}"></script>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Your Tasks
+{% endblock title %}
+
+
+{% block head %}
+    <meta name="csrf-token" content="{{ csrf_token }}">  <!-- Ensure this exists -->
+    <script src="{% static 'todo/js/is_completed.js' %}" defer></script>
+{% endblock head %}
+
+{% block content %}
+
+    <h2>Welcome, {{ user.username|title }}! Here are your tasks:</h2>
+
+    <div class="m-2">
+        {% for todo in todos %}
+            {% if todo.completed %}
+                {% include 'todo/includes/todo_item.html' %}
+            {% else %}
+                {% include 'todo/includes/todo_item.html' %}
+            {% endif %}
+        {% empty %}
+            <p>No tasks yet! <a href="{% url 'add' %}">Add a new task</a>.</p>
+        {% endfor %}
+    </div>
+
+    <form action="{% url 'add' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary m-2">Add Task</button>
+    </form>
+
+{% endblock content %}

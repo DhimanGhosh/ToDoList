@@ -1,0 +1,42 @@
+/* Navbar Styling */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Profile Dropdown */
+.nav-link img {
+    border: 2px solid white;
+}
+
+/* Dark Theme */
+.dark-theme {
+    background-color: #121212;
+    color: white;
+}
+.dark-theme .list-group-item {
+    background-color: #222;
+    color: white;
+}
+
+/* Light Theme */
+.light-theme {
+    background-color: #f8f9fa;
+    color: #333;
+}
+.light-theme .list-group-item {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Todo Colors */
+:root {
+    --pending-task-color: #ffc107;
+    --completed-task-color: #198754;
+}
+.todo-pending {
+    background-color: var(--pending-task-color);
+}
+.todo-completed {
+    background-color: var(--completed-task-color);
+}

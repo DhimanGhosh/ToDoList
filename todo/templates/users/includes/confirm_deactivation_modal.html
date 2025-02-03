@@ -1,0 +1,27 @@
+{% load static %}
+
+<div class="modal fade" id="deactivateModal" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="deactivateModalLabel">Confirm Account Deactivation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Please type your username <strong id="actual-username">{{ user.username }}</strong> to confirm account deletion:</p>
+                <input type="text" id="username-input" class="form-control" placeholder="Enter your username">
+                <small class="text-danger d-none" id="error-message">Incorrect username.</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deactivate-form" action="{% url 'deactivate_account' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" id="hidden-username">
+                    <button type="submit" class="btn btn-danger" id="confirm-btn" disabled>Confirm Deactivation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'todo/js/confirm_deactivation.js' %}"></script>
