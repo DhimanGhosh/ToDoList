@@ -28,7 +28,7 @@
                         <!-- Profile Dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                                <img src="{{ user.profile.image.url }}" alt="Profile" class="rounded-circle" width="35" height="35">
+                                <img src="{{ user.profile.profile_picture.url }}" alt="{{ user.username }}'s profile picture" class="rounded-circle" width="35" height="35">
                                 <span class="ms-2">{{ user.username|title }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
