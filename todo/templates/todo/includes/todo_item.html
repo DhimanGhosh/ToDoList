@@ -1,11 +1,33 @@
-<div id="todo-{{ todo.id }}" class="alert alert-{% if todo.completed %}success{% else %}warning{% endif %} d-flex justify-content-between align-items-start" role="alert">
+<div id="todo-{{ todo.id }}" 
+     class="alert alert-pending {% if todo.completed %}alert-success{% else %}alert-warning{% endif %} d-flex justify-content-between align-items-start" 
+     role="alert">
     <!-- Left side: Checkbox + Title & Description -->
     <div class="d-flex flex-column">
         <h3 class="mb-2">
-            <input type="checkbox" class="todo-checkbox me-2" data-todo-id="{{ todo.id }}" {% if todo.completed %}checked{% endif %}>
+            <input type="checkbox" id="checkbox-{{ todo.id }}" class="todo-checkbox me-2" data-todo-id="{{ todo.id }}" {% if todo.completed %}checked{% endif %}>
             {{ todo.title }}
         </h3>
         <div class="text-muted">{{ todo.description }}</div>  <!-- Description below the title -->
+    </div>
+
+    <!-- Middle: Timer Section -->
+    <div class="timer-section">
+        <label>Set Timer:</label>
+        <div class="timer-inputs">
+            <input type="number" id="hours-{{ todo.id }}" placeholder="Hours" min="0" max="99">
+            <input type="number" id="minutes-{{ todo.id }}" placeholder="Minutes" min="0" max="59">
+            <input type="number" id="seconds-{{ todo.id }}" placeholder="Seconds" min="0" max="59">
+        </div>
+        <script>
+            const todoData_{{ todo.id }} = {
+                "id": {{ todo.id }},
+                "title": "{{ todo.title|escapejs }}",
+                "description": "{{ todo.description|escapejs }}",
+                "completed": {{ todo.completed|yesno:"true,false" }}
+            };
+        </script>               
+        <button class="btn btn-sm btn-success" onclick="startTimer(todoData_{{ todo.id }})">Start Timer</button>        
+        <div id="countdown-{{ todo.id }}" class="countdown-timer mt-1"></div>
     </div>
 
     <!-- Right side: Created_at + Buttons -->
@@ -22,4 +44,5 @@
             </form>
         </div>
     </div>
+
 </div>

@@ -40,3 +40,87 @@
 .todo-completed {
     background-color: var(--completed-task-color);
 }
+
+/* Timer Section */
+.timer-section {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+}
+.timer-inputs {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+.timer-inputs input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+.timer-section label {
+    font-weight: bold;
+}
+.countdown-timer {
+    font-weight: bold;
+    color: #dc3545;  /* Red for countdown text */
+    font-size: 0.9rem;
+}
+
+/* Checkbox Animation */
+.todo-checkbox {
+    appearance: none;  /* Remove default checkbox styling */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.todo-checkbox:checked {
+    background-color: #28a745;
+    border-color: #28a745;
+    transform: scale(1.2);  /* Small scaling effect on tick */
+}
+.todo-checkbox:checked::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    transition: opacity 0.3s ease;
+}
+.todo-checkbox:hover {
+    transform: scale(1.1);  /* Slight scaling on hover */
+}
+
+/* Checkmark animation */
+@keyframes checkmark {
+    from {
+        opacity: 0;
+        transform: scale(0) rotate(45deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(45deg);
+    }
+}
+.alert {
+    transition: background-color 0.5s ease;  /* Smooth transition for background */
+}
+.alert-pending {
+    background-color: #fff3cd;  /* Light yellow for pending tasks */
+}
+.alert-success {
+    background-color: #d4edda;  /* Light green for completed tasks */
+}
+.alert-warning {
+    background-color: #ffeeba;  /* Slightly darker yellow for unchecked tasks */
+}

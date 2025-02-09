@@ -81,6 +81,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "ToDo.wsgi.application"
 
+LOGIN_URL = "login"  # Redirect to login page if trying to access login required pages after logout
 LOGIN_REDIRECT_URL = "todos"  # Redirect to todos page after login
 LOGOUT_REDIRECT_URL = "login"   # Redirect to login page after logout
 
