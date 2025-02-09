@@ -4,10 +4,16 @@ from .models import Todo
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .serializers import TodoSerializer
 
 # Create your views here.
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect("todos")
     return redirect("login")
 
 @login_required
@@ -34,7 +40,11 @@ def update(request, todo_id):
     if request.method == "POST":
         form = TodoForm(request.POST, instance=todo)
         if form.is_valid():
-            form.save()
+            if form.has_changed():
+                form.save()
+                messages.success(request, "Task updated successfully!")
+            else:
+                messages.info(request, "No changes made!")
             return redirect("todos")
     else:
         form = TodoForm(instance=todo)
@@ -64,3 +74,25 @@ def toggle_completed(request, todo_id):
 
 def custom_404(request, exception):
     return render(request, "404.html", status=404)
+
+
+## REST APIs
+
+# List and Create Todos
+class TodoListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = TodoSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Todo.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+# Retrieve, Update, and Delete a single Todd
+class TodoRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TodoSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Todo.objects.filter(user=self.request.user)

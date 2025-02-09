@@ -4,8 +4,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 # Create your views here.
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'users/change_password.html'
+    success_url = reverse_lazy('password_change_done')
 
 def register(request):
     if request.method == "POST":

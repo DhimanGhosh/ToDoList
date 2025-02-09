@@ -1,8 +1,6 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from django.conf.urls.static import static
-from django.conf import settings
 
 
 urlpatterns = [
@@ -13,5 +11,10 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("deactivate/", views.deactivate_account, name="deactivate_account"),
     path("update-profile-picture/", views.update_profile_picture, name="update_profile_picture"),
-] + \
-static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("change-password/",
+         views.CustomPasswordChangeView.as_view(),
+         name="change_password"),
+    path("change-password/done/",
+         auth_views.PasswordChangeDoneView.as_view(template_name="users/change_password_done.html"),
+         name="password_change_done"),
+]
