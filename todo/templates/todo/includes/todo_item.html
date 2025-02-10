@@ -12,24 +12,14 @@
 
     <!-- Middle: Timer Section -->
     <div class="timer-section">
-        <label>Set Timer:</label>
-        <div class="timer-inputs">
-            <input type="number" id="hours-{{ todo.id }}" placeholder="Hours" min="0" max="99">
-            <input type="number" id="minutes-{{ todo.id }}" placeholder="Minutes" min="0" max="59">
-            <input type="number" id="seconds-{{ todo.id }}" placeholder="Seconds" min="0" max="59">
-        </div>
-        <script>
-            const todoData_{{ todo.id }} = {
-                "id": {{ todo.id }},
-                "title": "{{ todo.title|escapejs }}",
-                "description": "{{ todo.description|escapejs }}",
-                "completed": {{ todo.completed|yesno:"true,false" }}
-            };
-        </script>               
-        <button class="btn btn-sm btn-success" onclick="startTimer(todoData_{{ todo.id }})">Start Timer</button>        
-        <div id="countdown-{{ todo.id }}" class="countdown-timer mt-1"></div>
+        <label><strong>Set Timer:</strong></label>
+        <input type="number" id="hours-{{ todo.id }}" placeholder="H" min="0" max="99">:
+        <input type="number" id="minutes-{{ todo.id }}" placeholder="M" min="0" max="59">:
+        <input type="number" id="seconds-{{ todo.id }}" placeholder="S" min="0" max="59">
+        <button id="timer-button-{{ todo.id }}" class="btn btn-sm btn-primary" onclick="startTimer({ id: {{ todo.id }} })">Start Timer</button>
+        <div id="countdown-{{ todo.id }}" class="text-danger"></div>
     </div>
-
+    
     <!-- Right side: Created_at + Buttons -->
     <div class="d-flex flex-column align-items-end">
         <div class="text-muted mb-2"><b>Created On:</b> {{ todo.created_at|date:"F d, Y h:i A" }}</div>

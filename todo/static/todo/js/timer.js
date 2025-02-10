@@ -1,57 +1,34 @@
 function startTimer(todo) {
-    console.log(`Starting timer for: ${todo.title}`);  // Debugging output
+    let hours = parseInt(document.getElementById(`hours-${todo.id}`).value) || 0;
+    let minutes = parseInt(document.getElementById(`minutes-${todo.id}`).value) || 0;
+    let seconds = parseInt(document.getElementById(`seconds-${todo.id}`).value) || 0;
+    let countdown = document.getElementById(`countdown-${todo.id}`);
+    let checkbox = document.querySelector(`.todo-checkbox[data-todo-id="${todo.id}"]`);
+    let timerButton = document.getElementById(`timer-button-${todo.id}`);
 
-    let hoursInput = document.getElementById(`hours-${todo.id}`);
-    let minutesInput = document.getElementById(`minutes-${todo.id}`);
-    let secondsInput = document.getElementById(`seconds-${todo.id}`);
-
-    if (!hoursInput || !minutesInput || !secondsInput) {
-        console.error("Input fields not found for todo:", todo.id);
-        return;
-    }
-
-    let hours = parseInt(hoursInput.value) || 0;
-    let minutes = parseInt(minutesInput.value) || 0;
-    let seconds = parseInt(secondsInput.value) || 0;
-
-    let totalTime = (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
+    let totalTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
 
     if (totalTime <= 0) {
-        alert("Please enter a valid time.");
+        alert("Please set a valid timer!");
         return;
     }
 
-    let countdown = document.getElementById(`countdown-${todo.id}`);
-    let endTime = new Date().getTime() + totalTime;
+    let endTime = Date.now() + totalTime;
 
     let timer = setInterval(function () {
-        let now = new Date().getTime();
+        let now = Date.now();
         let distance = endTime - now;
 
         if (distance <= 0) {
             clearInterval(timer);
             countdown.innerHTML = "⏰ Time's up!";
-            // Send an AJAX request to mark the task as completed
-            fetch(`/update_task_status/${todo.id}/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCookie('csrftoken')
-                },
-                body: JSON.stringify({ completed: true })
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log("Task marked as completed.");
-                    // Update the UI to reflect that the task is completed
-                    updateTaskUI(todo.id);
-                } else {
-                    console.error("Failed to update task.");
-                }
-            })
-            .catch(err => console.error("Failed to update task."));
+            checkbox.checked = true;  // Check the checkbox
+
+            // Trigger the checkbox change event to update UI instantly
+            checkbox.dispatchEvent(new Event("change"));
+            timerButton.disabled = true;
         } else {
-            let hrs = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let hrs = Math.floor(distance / (1000 * 60 * 60));
             let mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             let secs = Math.floor((distance % (1000 * 60)) / 1000);
             countdown.innerHTML = `${hrs}h ${mins}m ${secs}s remaining`;

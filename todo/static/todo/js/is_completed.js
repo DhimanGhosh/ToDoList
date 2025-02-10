@@ -3,42 +3,35 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.addEventListener("change", function () {
             let todoId = this.dataset.todoId;
             let isChecked = this.checked;
-
-            let csrfMetaTag = document.querySelector('meta[name="csrf-token"]');
-            if (!csrfMetaTag) {
-                console.error("CSRF token meta tag not found!");
-                return;
-            }
-            let csrftoken = csrfMetaTag.getAttribute("content");
-
             let alertDiv = document.getElementById(`todo-${todoId}`);
+            let timerButton = document.getElementById(`timer-button-${todoId}`);
+            let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-            // Remove any temporary pop effect from previous interactions
-            let checkbox = document.querySelector(`#checkbox-${todoId}`);
-            if (checkbox) {
-                checkbox.classList.add('todo-checkbox-checked');
+            console.log("Updating Todo ID:", todoId, "Completed:", isChecked);
 
-                setTimeout(() => {
-                    checkbox.classList.remove('todo-checkbox-checked');  // Remove pop effect after 300ms
-                }, 300);
-            }
-
-            // Apply the appropriate background color class with a smooth transition
-            alertDiv.classList.remove("alert-success", "alert-warning");
-            alertDiv.classList.add(isChecked ? "alert-success" : "alert-warning");
-
-            // Send the status update to the server
             fetch(`/toggle_completed/${todoId}/`, {
                 method: "POST",
                 headers: {
-                    "X-CSRFToken": csrftoken,
+                    "X-CSRFToken": csrfToken,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ completed: isChecked })
             })
-            .then(response => response.json())
-            .then(data => console.log("Task status updated:", data))
-            .catch(error => console.error("Error:", error));
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Response:", data);
+
+                    // Update the color without refreshing the page
+                    alertDiv.classList.remove("alert-success", "alert-warning");
+                    if (data.completed) {
+                        alertDiv.classList.add("alert-success");
+                        timerButton.disabled = true;  // Disable timer on completion
+                    } else {
+                        alertDiv.classList.add("alert-warning");
+                        timerButton.disabled = false;  // Enable timer for incomplete tasks
+                    }
+                })
+                .catch(error => console.error("Error:", error));
         });
     });
 });

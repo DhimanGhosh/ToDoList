@@ -31,8 +31,8 @@
 
 /* Todo Colors */
 :root {
-    --pending-task-color: #ffc107;
-    --completed-task-color: #198754;
+    --pending-task-color: #fff3cd;
+    --completed-task-color: #d4edda;
 }
 .todo-pending {
     background-color: var(--pending-task-color);
@@ -43,13 +43,32 @@
 
 /* Timer Section */
 .timer-section {
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.timer-section input {
+    width: 50px;
+    padding: 4px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.timer-section button {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.timer-section button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
 }
 .timer-inputs {
     display: flex;
-    gap: 8px;
+    gap: 5px;
     margin-top: 5px;
 }
 .timer-inputs input {
@@ -65,8 +84,13 @@
 }
 .countdown-timer {
     font-weight: bold;
-    color: #dc3545;  /* Red for countdown text */
+    color: #dc3545;  /* Red for countdown */
     font-size: 0.9rem;
+}
+button[disabled] {
+    background-color: #aaa;
+    cursor: not-allowed;
+    border: 1px solid #888;
 }
 
 /* Checkbox Animation */
@@ -113,14 +137,20 @@
     }
 }
 .alert {
-    transition: background-color 0.5s ease;  /* Smooth transition for background */
+    padding: 20px;
+    transition: background-color 0.3s ease;
+}
+.alert-info {
+    background-color: #eaf7ff;  /* Light blue for pending tasks */
 }
 .alert-pending {
     background-color: #fff3cd;  /* Light yellow for pending tasks */
 }
-.alert-success {
-    background-color: #d4edda;  /* Light green for completed tasks */
-}
 .alert-warning {
-    background-color: #ffeeba;  /* Slightly darker yellow for unchecked tasks */
+    background-color: var(--pending-task-color);
+    transition: background-color 0.3s ease;
+}
+.alert-success {
+    background-color: var(--completed-task-color);
+    transition: background-color 0.3s ease;
 }
