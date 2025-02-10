@@ -35,12 +35,6 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">👤 Profile</a></li>
                                 
-                                <li><a class="dropdown-item" href="#" id="toggle-theme">🌗 Change Theme</a></li>
-                                <script src="{% static 'js/toggle_theme.js' %}" defer></script>
-
-                                <li><a class="dropdown-item" href="#" id="change-todo-colors">🎨 Todo Colors</a></li>
-                                {% include 'includes/todo_color_modal.html' %}
-                                
                                 <li><a class="dropdown-item" href="{% url 'update_profile_picture' %}">🖼 Update Profile Picture</a></li>
 
                                 <li><hr class="dropdown-divider"></li>

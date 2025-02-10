@@ -20,16 +20,6 @@
 
         <a class="list-group mt-3">
             <ul class="list-group mt-3">
-                <a href="#" class="text-decoration-none">
-                    <li class="list-group-item list-group-item-action">🌗 Change Theme</li>
-                </a>
-
-                <a href="#" class="text-decoration-none">
-                    <li class="list-group-item list-group-item-action" id="change-todo-colors">🎨 Change Todo Colors</li>
-                </a>
-                {% include 'includes/todo_color_modal.html' %}
-                <script src="{% static 'js/change_todo_color.js' %}"></script>
-
                 <!-- Update Profile Picture -->
                 <a href="{% url 'update_profile_picture' %}" class="text-decoration-none">
                     <li class="list-group-item list-group-item-action">🖼 Update Profile Picture</li>
