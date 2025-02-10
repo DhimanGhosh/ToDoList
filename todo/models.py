@@ -16,3 +16,9 @@ class Todo(models.Model):
 
     class Meta:
         ordering = ['completed']
+
+class SiteConfig(models.Model):
+    auto_delete_days = models.PositiveIntegerField(default=7)  # Default to 7 days
+
+    def __str__(self):
+        return f"Auto-delete tasks after {self.auto_delete_days} days"

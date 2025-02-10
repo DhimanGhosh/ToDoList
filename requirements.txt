@@ -4,3 +4,4 @@ djangorestframework_simplejwt==5.4.0
 pytest==7.4.4
 pytest-cov==6.0.0
 pytest-django==4.9.0
+django-admin-interface==0.29.4
